@@ -8,5 +8,6 @@
 </head>
 <body>
 	<h1>GitHub Test</h1>
+	<h2>Test 2 Change</h2>
 </body>
 </html>
