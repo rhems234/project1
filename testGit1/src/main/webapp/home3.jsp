@@ -25,34 +25,29 @@
 	<%@ include file="login_nav.jsp" %>
 
 	<%@ include file="main_nav.jsp" %>
-	
-	<div id="exhibitionInfo">
-  <!-- 전시회 정보가 출력될 영역 -->
-</div>
-
-	<script>
-  // Ajax 요청을 통해 전시회 정보를 가져와서 화면에 출력하는 함수
-  function getExhibitionInfo() {
-    $.ajax({
-      type: 'GET',
-      url: 'api/test2', // ApiController의 URL
-      success: function (response) {
-        var thumbnailUrl = response.thumbnailUrl; // 이미지 URL을 가져옴
-        var thumbnailImg = $('<img>').attr('src', thumbnailUrl); // 이미지 태그 생성 후 src 속성에 이미지 URL 설정
-        $('#exhibitionInfo').append(thumbnailImg); // 생성한 이미지 태그를 화면에 추가
-      },
-      
-      error: function (xhr, status, error) {
-        console.error('Error occurred while fetching exhibition info:', error);
-      }
-    });
-  }
-
-  // 페이지 로드 시 전시회 정보를 가져와서 화면에 출력
-  $(document).ready(function () {
-    getExhibitionInfo();	    
-  });
-</script>
+	 <h1>전시회 정보</h1>
+    <table>
+        <tr>
+            <th>전시회명</th>
+            <th>장소</th>
+            <th>시작일</th>
+            <th>종료일</th>
+            <th>분류</th>
+            <th>썸네일 URL</th>
+        </tr>
+        <%-- 전시회 정보를 동적으로 출력하는 부분 --%>
+        <%-- 여기에 ApiController에서 전달한 데이터를 반복문을 통해 출력 --%>
+        <c:forEach var="exhibition" items="${exhibitionList}">
+            <tr>
+                <td>${exhibition.title}</td>
+                <td>${exhibition.place}</td>
+                <td>${exhibition.startDate}</td>
+                <td>${exhibition.endDate}</td>
+                <td>${exhibition.realmName}</td>
+                <td><img src="${exhibition.thumbnailUrl}" alt="썸네일"></td>
+            </tr>
+        </c:forEach>
+    </table>
 
 		
 	<%@ include file="footer.jsp" %>

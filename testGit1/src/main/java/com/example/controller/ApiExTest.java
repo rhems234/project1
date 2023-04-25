@@ -9,7 +9,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ApiExTest {
-	
+
 	// tag값의 정보를 가져오는 함수
 	public static String getTagValue(String tag, Element eElement) {
 
@@ -69,10 +69,11 @@ public class ApiExTest {
 				System.out.println("장소 : " + getTagValue("place", eElement)); // 수정된 부분: 필요한 정보에 맞게 태그명 변경
 				System.out.println("시작일 : " + getTagValue("startDate", eElement)); // 수정된 부분: 필요한 정보에 맞게 태그명 변경
 				System.out.println("종료일 : " + getTagValue("endDate", eElement));
-//				System.out.println("설명 : " +getTagValue("", eElement));
+				System.out.println("분류 : " +getTagValue("realmName", eElement));
+				System.out.println("썸네일 URL : " +getTagValue("thumbnail", "http://www.culture.go.kr/upload/rdf/20/12/rdf_202012311432049249.jpg" ,eElement));
 				System.out.println();
 			}
-		
+
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
