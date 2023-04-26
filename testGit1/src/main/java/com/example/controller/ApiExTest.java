@@ -70,7 +70,7 @@ public class ApiExTest {
 				System.out.println("시작일 : " + getTagValue("startDate", eElement)); // 수정된 부분: 필요한 정보에 맞게 태그명 변경
 				System.out.println("종료일 : " + getTagValue("endDate", eElement));
 				System.out.println("분류 : " +getTagValue("realmName", eElement));
-				System.out.println("썸네일 URL : " +getTagValue("thumbnail", "http://www.culture.go.kr/upload/rdf/20/12/rdf_202012311432049249.jpg" ,eElement));
+				System.out.println("썸네일 URL : " +getTagValue("thumbnail",eElement));
 				System.out.println();
 			}
 
