@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
 @font-face {
@@ -18,7 +18,7 @@
  *{font-family: 'GangwonEdu_OTFBoldA', sans-serif;}
 </style>
 <meta charset="UTF-8">
-    <title>Exhibition Info</title>
+<title>Exhibition Info</title>
 	
 </head>
 <body>
@@ -26,49 +26,82 @@
 
 	<%@ include file="main_nav.jsp" %>
 	
-	<div id="title"></div>
-	<div id="place"></div>
-	<div id="startDate"></div>
-	<div id="endDate"></div>
-	<div id="realmName"></div>
 	
-	<img id="thumbnail">
-    
-    <script>
-    $.ajax({
-        url: "test2", // 호출할 API의 URL
-        type: "GET",
-        xhrFields: {
-            withCredentials: true
-        },
-        success: function(data) { // 성공적으로 응답 받았을 때의 콜백 함수
-            // XML 데이터 파싱
-            console.log(data);
-            /* var title = $(data).find("title").text();
-            var place = $(data).find("place").text();
-            var startDate = $(data).find("startDate").text();
-            var endDate = $(data).find("endDate").text();
-            var realmName = $(data).find("realmName").text();
-            var thumbnailImage = $(data).find("thumbnailImage").text(); */
-            
-            // 추출한 정보를 HTML에 추가하여 화면에 보여주기
-            $("#title").text("전시회명: " + title);
-            $("#place").text("장소: " + place);
-            $("#startDate").text("시작일: " + startDate);
-            $("#endDate").text("종료일: " + endDate);
-            $("#realmName").text("분류: " + realmName);
-            
-            // 이미지 데이터를 img 태그에 넣어 이미지 보여주기
-            var img = document.createElement("img");
-            img.src = "data:image/jpeg;base64," + thumbnailImage; // 이미지의 base64 데이터를 src에 넣어줌
-            $("#thumbnail").append(img); // 이미지를 보여줄 태그에 추가
-        },
-        error: function(jqXHR, textStatus, errorThrown) { // 에러 발생 시의 콜백 함수
-            console.log("에러 발생: " + textStatus + ", " + errorThrown);
-        }
-    });
-    </script>
-		
+<div id="eventList1"></div>
+<div id="eventList2"></div>
+<div id="eventList3"></div>
+<div id="eventList4"></div>
+<div id="eventList5"></div>
+<div id="eventList6"></div>
+<div id="eventList7"></div>
+<div id="eventList8"></div>
+<div id="eventList9"></div>
+<div id="eventList10"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+	  $.ajax({
+	    url: "test2",
+	    type: "GET",
+	    xhrFields: {
+	      withCredentials: true
+	    },
+	    success: function(data) {
+	      console.log(data);
+	      var jsonArray = JSON.parse(data);
+
+	      for (var i = 0; i < jsonArray.length; i++) {
+	        var title = jsonArray[i].title;
+	        var place = jsonArray[i].place;
+	        var startDate = jsonArray[i].startDate;
+	        var endDate = jsonArray[i].endDate;
+	        var realmName = jsonArray[i].realmName;
+
+	        var eventEl = $("<div>").addClass("event").attr("data-event-index", i);
+
+	        if (jsonArray[i].thumbnail) {
+	          var thumbnailImage = jsonArray[i].thumbnail;
+	          var thumbnailEl = $("<img>").addClass("thumbnail").attr("src", thumbnailImage);
+	          eventEl.append(thumbnailEl);
+	        }
+
+	        var titleEl = $("<p>").text("Title: " + title);
+	        var placeEl = $("<p>").text("Place: " + place);
+	        var startDateEl = $("<p>").text("Start Date: " + startDate);
+	        var endDateEl = $("<p>").text("End Date: " + endDate);
+	        var realmNameEl = $("<p>").text("Realm Name: " + realmName);
+
+	        eventEl.append(titleEl);
+	        eventEl.append(placeEl);
+	        eventEl.append(startDateEl);
+	        eventEl.append(endDateEl);
+	        eventEl.append(realmNameEl);
+
+	        eventEl.on("click", function() {
+	          var eventIndex = $(this).attr("data-event-index");
+	          window.location.href = "Details.jsp?index=" + eventIndex;
+	        });
+	        
+	        var eventListIndex = i % 10 + 1; 
+	        $("#eventList" + eventListIndex).append(eventEl);
+	      }
+
+	      (function(jsonArray) {
+	        $(document).on("click", ".event", function() {
+	          var eventIndex = $(this).attr("data-event-index");
+	          console.log(jsonArray[eventIndex]);
+	        });
+	      })(jsonArray);
+	    },
+	    error: function(xhr, status, error) {
+	      console.error(xhr, status, error);
+	    }
+	  });
+	});
+
+</script>
+
 	<%@ include file="footer.jsp" %>
 </body>
 </html>
