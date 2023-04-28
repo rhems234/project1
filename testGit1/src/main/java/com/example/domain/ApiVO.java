@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class ApiVO {
-	
-	private String title;
-	private String place;
-	private String startDate;
-	private String endDate;
-	
+
+	private Long id;
+	private Long password;
+	private String name;
+	private String email;
+	private String nickname;
 }

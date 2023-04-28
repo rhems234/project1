@@ -27,80 +27,91 @@
 	<%@ include file="main_nav.jsp" %>
 	
 	
-<div id="eventList1"></div>
-<div id="eventList2"></div>
-<div id="eventList3"></div>
-<div id="eventList4"></div>
-<div id="eventList5"></div>
-<div id="eventList6"></div>
-<div id="eventList7"></div>
-<div id="eventList8"></div>
-<div id="eventList9"></div>
-<div id="eventList10"></div>
+<div class="container">
+    <div class="row row-cols-4" id="eventList">
+    </div>
+ </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-	  $.ajax({
-	    url: "test2",
-	    type: "GET",
-	    xhrFields: {
-	      withCredentials: true
-	    },
-	    success: function(data) {
-	      console.log(data);
-	      var jsonArray = JSON.parse(data);
 
-	      for (var i = 0; i < jsonArray.length; i++) {
-	        var title = jsonArray[i].title;
-	        var place = jsonArray[i].place;
-	        var startDate = jsonArray[i].startDate;
-	        var endDate = jsonArray[i].endDate;
-	        var realmName = jsonArray[i].realmName;
+ <script>
+    $(document).ready(function() {
+      $.ajax({
+        url: "test2",
+        type: "GET",
+        xhrFields: {
+          withCredentials: true
+        },
+        success: function(data) {
+          console.log(data);
+          var jsonArray = JSON.parse(data);
 
-	        var eventEl = $("<div>").addClass("event").attr("data-event-index", i);
+          $("#eventList").empty();
 
-	        if (jsonArray[i].thumbnail) {
-	          var thumbnailImage = jsonArray[i].thumbnail;
-	          var thumbnailEl = $("<img>").addClass("thumbnail").attr("src", thumbnailImage);
-	          eventEl.append(thumbnailEl);
-	        }
+          for (var i = 0; i < jsonArray.length; i++) {
+        	var realmName = jsonArray[i].realmName;  
+            var title = jsonArray[i].title;
+            var place = jsonArray[i].place;
+            var startDate = jsonArray[i].startDate;
+            var endDate = jsonArray[i].endDate;
+            
 
-	        var titleEl = $("<p>").text("Title: " + title);
-	        var placeEl = $("<p>").text("Place: " + place);
-	        var startDateEl = $("<p>").text("Start Date: " + startDate);
-	        var endDateEl = $("<p>").text("End Date: " + endDate);
-	        var realmNameEl = $("<p>").text("Realm Name: " + realmName);
+            var thumbnailImage = jsonArray[i].thumbnail ? jsonArray[i].thumbnail : "https://via.placeholder.com/150x150"; // 썸네일 이미지가 없을 경우 기본 이미지 사용
 
-	        eventEl.append(titleEl);
-	        eventEl.append(placeEl);
-	        eventEl.append(startDateEl);
-	        eventEl.append(endDateEl);
-	        eventEl.append(realmNameEl);
+            var cardEl = $("<div>").addClass("col mb-4");
+            var card = $("<div>").addClass("card h-100");
+            var img = $("<img>").addClass("card-img-top").attr("src", thumbnailImage).attr("alt", "Card image cap").attr("style", "height:300px;");
+            var cardBody = $("<div>").addClass("card-body");
+            var cardRealm = $("<p>").addClass("card-text").text(realmName);
+            var cardTitle = $("<h3>").addClass("card-title").text(title);
+            var cardText = $("<p>").addClass("card-text").text(place);
+            var cardText = $("<p>").addClass("card-text").text(startDate + " ~ " + endDate);
+            
 
-	        eventEl.on("click", function() {
-	          var eventIndex = $(this).attr("data-event-index");
-	          window.location.href = "Details.jsp?index=" + eventIndex;
-	        });
-	        
-	        var eventListIndex = i % 10 + 1; 
-	        $("#eventList" + eventListIndex).append(eventEl);
-	      }
+            cardBody.append(cardTitle);
+            cardBody.append(cardText);
+            cardBody.append(cardRealm);
+            card.append(img);
+            card.append(cardBody);
+            cardEl.append(card);
+            
+            // 버튼 1
+           var btn1 = $("<button>").addClass("btn btn-primary mr-2").text("상세페이지");
+            btn1.attr("data-card-info", JSON.stringify(jsonArray[i]));
+            btn1.click(function() {
+                var cardInfo = JSON.parse($(this).attr("data-card-info"));
+                var queryString = "?realmName=" + cardInfo.realmName + "&title=" + cardInfo.title + "&place=" + cardInfo.place + "&thumbnail=" + encodeURIComponent(cardInfo.thumbnail);
+                window.location.href = "eventPage.jsp" + queryString;
+            });
+            
+            cardBody.append(btn1);
 
-	      (function(jsonArray) {
-	        $(document).on("click", ".event", function() {
-	          var eventIndex = $(this).attr("data-event-index");
-	          console.log(jsonArray[eventIndex]);
-	        });
-	      })(jsonArray);
-	    },
-	    error: function(xhr, status, error) {
-	      console.error(xhr, status, error);
-	    }
-	  });
-	});
+            // 버튼 2
+            var btn2 = $("<button>").addClass("btn btn-secondary float-right ml-2").text("상세페이지 2");
+            btn2.attr("id", "btn2-" + i);
+            btn2.click(function() {
+                window.location.href = "eventPage?eventId=" + jsonArray[i].id + "&btnId=2";
+            });
+            cardBody.append(btn2);
 
+            // 버튼 3
+            var btn3 = $("<button>").addClass("btn btn-danger float-right").text("상세페이지 3");
+            btn3.attr("id", "btn3-" + i);
+            btn3.click(function() {
+                window.location.href = "eventPage?eventId=" + jsonArray[i].id + "&btnId=3";
+            });
+            cardBody.append(btn3);
+
+            $("#eventList").append(cardEl);
+          }
+        },
+    error: function(xhr, status, error) {
+      console.error(xhr, status, error);
+    }
+  });
+});
 </script>
+
+
 
 	<%@ include file="footer.jsp" %>
 </body>
