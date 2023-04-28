@@ -36,7 +36,7 @@ public class BuyControllerTests {
 	public void testInsert() throws Exception{
 
 		String resultPage = mockMvc.perform(MockMvcRequestBuilders
-				.post("/buy/insert")
+				.post("/buy/buyprocess")
 				.param("id", "test")
 				.param("adult", "1")
 				.param("child", "2")
@@ -52,7 +52,7 @@ public class BuyControllerTests {
 	public void testList() throws Exception{
 
 		log.info(mockMvc.perform(MockMvcRequestBuilders
-				.get("/buy/list")
+				.get("/buy/buyprocess")
 				.param("id", "a"))
 				.andReturn()
 				.getModelAndView()
@@ -62,7 +62,7 @@ public class BuyControllerTests {
 //	@Test //조회, 수정 폼 이동 테스트
 	public void testGet() throws Exception{
 
-		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/buy/get")
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/buy/buyprocess")
 				.param("id", "test"))
 				.andReturn()
 				.getModelAndView()
@@ -72,7 +72,7 @@ public class BuyControllerTests {
 //	@Test //수정 테스트
 	public void testModify() throws Exception{
 
-		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/buy/modify")
+		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/buy/buyprocess")
 											.param("id", "test")
 											.param("adult", "3")
 											.param("child", "4")
@@ -87,7 +87,7 @@ public class BuyControllerTests {
 //	@Test //삭제 테스트
 	public void testDelete() throws Exception{
 
-		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/buy/delete")
+		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/buy/buyprocess")
 											.param("id", "test"))
 									.andReturn()
 									.getModelAndView()
