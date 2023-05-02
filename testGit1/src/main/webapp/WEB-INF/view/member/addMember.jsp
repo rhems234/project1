@@ -33,8 +33,7 @@
 	<%@include file="../main_nav.jsp" %>	
 
 	<div class="container" style="width: 400px; margin-top: 10px">
-		<form name="newMember" class="form-horizontal"  action="processAddMember.jsp" method="post" onsubmit="return checkForm()">
-			
+		<form name="newMember" class="form-horizontal"  action="${pageContext.request.contextPath}/processAddMember" method="post" onsubmit="return checkForm()">
 			<div class="input-group mb-3">
 				<label class="input-group-text">아이디</label>
 				<input name="id" type="text" class="form-control" placeholder="id" >

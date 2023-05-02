@@ -16,7 +16,7 @@
 		<div class="navbar-header">
 			<a class="navbar-brand" style="margin-right: 55px; font-size: 28px" href="#">전국 전시회</a>
 			<a class="navbar-brand" style="margin-right: 55px; font-size: 28px" href="#">지역별 전시회</a>
-			<a class="navbar-brand" style="margin-right: 55px; font-size: 28px" href="#">리뷰 모음</a>
+			<a class="navbar-brand" style="margin-right: 55px; font-size: 28px" href="#">게시판</a>
 		</div>
 	</div>
 </nav>

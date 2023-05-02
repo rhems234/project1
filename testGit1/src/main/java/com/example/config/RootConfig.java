@@ -14,7 +14,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-@ComponentScan(basePackages = {"com.example.service"})
+@ComponentScan(basePackages = {"com.example.controller", "com.example.service", "com.example.repository"})
 @MapperScan(basePackages= {"com.example.mapper"})
 
 public class RootConfig {

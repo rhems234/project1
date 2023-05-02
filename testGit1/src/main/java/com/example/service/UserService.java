@@ -2,24 +2,17 @@ package com.example.service;
 
 import java.sql.SQLException;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.domain.BuyDTO;
 import com.example.domain.MemberDTO;
-import com.example.repository.BuyRepository;
 import com.example.repository.UserRepository;
 
 @Service
-public class BuyService {
+public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-
-	@Autowired
-	private BuyRepository buyRepository;
 
 	public MemberDTO login(String id, String password) {
 		try {
@@ -30,13 +23,33 @@ public class BuyService {
 		}
 	}
 
-	 public boolean buy(HttpSession session, BuyDTO buyDTO) {
+	 public boolean join(MemberDTO memberDTO) {
 	        try {
-	        	buyRepository.buy(session, buyDTO);
+	            userRepository.save(memberDTO);
 	            return true;
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	            return false;
 	        }
 	    }
+
+	 public boolean updateUser(MemberDTO memberDTO) {
+			try {
+				userRepository.update(memberDTO);
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+	 public boolean deleteUser(MemberDTO memberDTO) {
+			try {
+				userRepository.delete(memberDTO);
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
 }

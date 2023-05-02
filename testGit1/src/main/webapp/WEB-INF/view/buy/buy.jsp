@@ -1,22 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@ page import="java.util.Arrays"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <%
-	String sessionId = (String) session.getAttribute("sessionId");
 	String title = request.getParameter("title");
 %>
-<sql:setDataSource var="dataSource"
-	url="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"
-	driver="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" user="culture" password="culture" />
-<sql:query dataSource="${dataSource}" var="resultSet">
-   SELECT * FROM MEMBER WHERE ID=?
-   <sql:param value="<%=sessionId%>" />
-</sql:query>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -38,7 +29,9 @@
 <body>
 
 	
-	<%@include file="../main_nav.jsp" %>	
+<%@include file="../login_nav.jsp" %>	
+<%@include file="../main_nav.jsp" %>	
+
 	
 <h1>구매하기</h1>	
 <div class="container mt-4">
@@ -59,7 +52,7 @@
         </div>
       </div>
       
-     <form class="form-horizontal"  action="/buy/buyprocess.jsp" method="post">
+     <form class="form-horizontal"  action="${pageContext.request.contextPath}/processBuy" method="post">
       <div class="row mt-4">
         <div class="col">
           <div class="card" style="width: 18rem;">
@@ -90,6 +83,9 @@
     </form>
   </div>
 </div>
+    
+    
+   
 </body>
 	
 </body>

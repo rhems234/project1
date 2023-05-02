@@ -81,7 +81,7 @@
                 var cardInfo = JSON.parse($(this).attr("data-card-info"));
                 var queryString = "?realmName=" + cardInfo.realmName + "&title=" + cardInfo.title + "&place=" + cardInfo.place + "&thumbnail=" + encodeURIComponent(cardInfo.thumbnail);
                 var contextPath = "<%=request.getContextPath()%>";
-                var url = contextPath + "/buy/buy.jsp";
+                var url = contextPath + "/buy";
                 window.location.href = url + queryString;
             });
             

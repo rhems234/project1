@@ -3,8 +3,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://kit.fontawesome.com/930e9d87c4.js"></script>
 <style type="text/css">
 .btn{ background: linear-gradient(to right, #F7A4A4, #FEA679); color: #fff; }
 </style>
@@ -14,6 +15,17 @@
 	
 		<%@include file="../login_nav.jsp" %>	
 		<%@include file="../main_nav.jsp" %>	
+		
+		<div id="myModal" class="modal">
+		    <div class="modal-content">
+		        <% if (request.getAttribute("welcomeMsg") != null) { %>
+		            <p>${welcomeMsg}</p>
+		        <% } else { %>
+		            <p>${msg}</p>
+		        <% } %>
+		        <span class="close">&times;</span>
+		    </div>
+		</div>
 		
 		
 		<%
@@ -40,6 +52,24 @@
 			</form>
 		</div>	
 		
+<script>
+    <%-- 모달창 띄우기 --%>
+    <% if (request.getAttribute("msg") != null || request.getAttribute("welcomeMsg") != null) { %>
+        var modal = document.getElementById("myModal");
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    <% } %>
+</script>
+
+	
 		<%@include file="../footer.jsp" %>
 
 </body>

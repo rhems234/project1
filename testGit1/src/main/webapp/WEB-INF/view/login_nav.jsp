@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<%
-	String sessionId = (String) session.getAttribute("sessionId");
-%>
-
 <style>
 #link {text-decoration: none;}
 .navbar { background: linear-gradient(to right, #F7A4A4, #FEA679);}
@@ -28,13 +23,13 @@
   </div>
 	<div class="container-md" style="display: flex; justify-content: flex-end; align-items: center;">
 		<c:choose>
-			<c:when test="${empty sessionId}">
+			<c:when test="${empty loginUser}">
 				<a class="navbar-brand" style="margin-right: 30px" href="<c:url value='/login'/>">로그인 </a>
 				<a class="navbar-brand" href='<c:url value="/addMember"/>'>회원 가입</a>
 			</c:when>
 			<c:otherwise>
-				<a class="navbar-brand">[<%=sessionId%>님]</a>
-				<a class="navbar-brand" href="../buy/mybuy.jsp?id=<%=sessionId%>"> 내 활동 </a>
+				<a class="navbar-brand">[${sessionScope.loginUser.name}님]</a>
+				<a class="navbar-brand" href="../buy/mybuy.jsp?id=${loginUser}"> 내 활동 </a>
 				<a class="navbar-brand" href="<c:url value="/logout"/>">로그아웃 </a>
 				<a class="navbar-brand" href="<c:url value="/updateMember"/>">회원 수정</a>
 			</c:otherwise>

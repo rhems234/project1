@@ -2,18 +2,37 @@ package com.example.service;
 
 import java.util.List;
 
-import com.example.domain.ApiVO;
-import com.example.domain.Criteria;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface BoardService {
+import com.example.domain.BoardVO;
+import com.example.repository.BoardRepository;
 
-	public void register(ApiVO board);
-	public ApiVO get(Long bno);
-	public boolean modify(ApiVO board);
-	public boolean remove(Long bno);
+@Service
+public class BoardService {
 
-	/* public List<BoardVO> getList(); */
+	@Autowired
+	private BoardRepository boardRepository;
 
-	public List<ApiVO> getList(Criteria cri);
+	public List<BoardVO> getBoardList() throws Exception {
+		return boardRepository.getBoardList();
+	}
+
+	public BoardVO getBoard(String id) throws Exception {
+		return boardRepository.getBoard(id);
+	}
+
+	public void insertBoard(BoardVO board) throws Exception {
+		boardRepository.insertBoard(board);
+	}
+
+	public void updateBoard(BoardVO board) throws Exception {
+		boardRepository.updateBoard(board);
+	}
+
+	public void deleteBoard(String id) throws Exception {
+		boardRepository.deleteBoard(id);
+	}
 
 }
+
