@@ -19,42 +19,44 @@
 </style>
 <meta charset="UTF-8">
 <title>Exhibition Info</title>
-	
+<script>
+		$(document).ready(function() {
+			$(".btn-view").click(function() {
+				var id = $(this).data("board-id");
+				window.location.href = "<%=request.getContextPath()%>/board/" + id;
+			});
+		});
+	</script>
 </head>
 <body>
  	<%@ include file="../login_nav.jsp" %>
 
  	<%@ include file="../main_nav.jsp" %>
 	
+		
 	<h1>게시판 목록</h1>
-	<c:if test="${not empty boardList}">
-		<table border="1">
-			<thead>
-				<tr>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>평점</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${boardList}" var="board">
-					<tr>
-						<td><a href="${pageContext.request.contextPath}/board/${board.id}">${board.title}</a></td>
-						<td>${board.nickname}</td>
-						<td>${board.grade}</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+	<c:if test="${not empty msg}">
+		<p>${msg}</p>
 	</c:if>
-	<c:if test="${empty boardList}">
-		<p>게시글이 존재하지 않습니다.</p>
-	</c:if>
-	<br>
-	<a href="${pageContext.request.contextPath}/board/write">글쓰기</a>
+	<table>
+		<tr>
+			<th>전시회</th>
+			<th>작성자</th>
+			<th>내용</th>
+			<th>평점</th>
+		</tr>
+		<c:forEach var="board" items="${boardList}">
+			<tr>
+				<td><a href="/board/detail?id=${board.title}">${board.title}</a></td>
 
+				<td>${board.nickname}</td>
+				<td>${board.text}</td>
+				<td>${board.grade}</td>
+			</tr>
+		</c:forEach>
+	</table>
 
-
+	
 	<%@ include file="../footer.jsp" %>
 </body>
 </html>

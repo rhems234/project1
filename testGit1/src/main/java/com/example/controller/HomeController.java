@@ -1,5 +1,6 @@
 package com.example.controller;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
+	
+	@GetMapping("/area")
+	public String area() {
+		return "area";
+	}
 
 	//로그인 화면 이동
 	@GetMapping("/login")
@@ -43,7 +49,7 @@ public class HomeController {
 			return "redirect:/login";
 		} else { // 로그인 성공 시
 			rttr.addFlashAttribute("welcomeMsg", "환영합니다, " + user.getNickname() + "님!");
-			session.setAttribute("loginUser", user); // 세션에 로그인 정보 저장
+			session.setAttribute("loginUser", user);
 			return "redirect:/";
 		}
 	}

@@ -19,13 +19,11 @@
 	
 	<div class="container" style="width: 400px; margin-top: 10px" align="left">
 	
-		<form name="newMember" class="form-horizontal" action="${pageContext.request.contextPath}/processUpdateMember" 
-			  method="post" onsubmit="return checkForm()">
+		<form name="newMember" class="form-horizontal" action="${pageContext.request.contextPath}/processUpdateMember"  method="post" onsubmit="return checkForm()">
 			
 			<div class="input-group mb-3">
 				<label class="input-group-text"> 회원 ID </label>
-				<input name="id" type="text" class="form-control" placeholder="id"
-						value="<c:out value='${sessionScope.loginUser.id}'/>" />
+				<input name="id" type="text" class="form-control" placeholder="id" value="<c:out value='${sessionScope.loginUser.id}'/>" />
 			</div>
 			
 			<div class="input-group mb-3">
@@ -75,9 +73,7 @@
 					<input type="submit" class="btn btn-primary" value="회원수정"> 
 					<a href="${pageContext.request.contextPath}/deleteMember" class="btn btn-primary">회원탈퇴</a>
 				</div>
-			</div>
-			
-			
+			</div>	
 		</form>	
 	</div>
 	

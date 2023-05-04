@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,15 +23,15 @@ import org.xml.sax.SAXException;
 @RestController
 public class ApiController {
 
-	@ResponseBody
-	@GetMapping(value = "/test2", produces = "application/html; charset=UTF-8")
+   @ResponseBody
+   @GetMapping(value = "/test2", produces = "application/html; charset=UTF-8")
     public String getExhibitionInfoWithImages() throws IOException, ParserConfigurationException, SAXException, JSONException {
         String key = "0OhBU7ZCGIobDVKDeBJDpmDRqK3IRNF6jlf/JB2diFAf/fR2czYO9A4UTGcsOwppV6W2HVUeho/FPwXoL6DwqA==";
         JSONArray jsonArray = new JSONArray();
 
         try {
             String url = "http://www.culture.go.kr/openapi/rest/publicperformancedisplays/period"
-                    + "?ServiceKey=" + key;
+                    + "?ServiceKey=" + key +"&rows=100";
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -43,12 +45,13 @@ public class ApiController {
                 Node nNode = nList.item(temp);
                 Element eElement = (Element) nNode;
 
-                String title = getTagValue("title", eElement);
-                String place = getTagValue("place", eElement);
-                String startDate = getTagValue("startDate", eElement);
-                String endDate = getTagValue("endDate", eElement);
-                String realmName = getTagValue("realmName", eElement);
-                String thumbnailUrl = getTagValue("thumbnail", eElement);
+                List<String> title = getTagValues("title", eElement);
+                List<String> place = getTagValues("place", eElement);
+                List<String> startDate = getTagValues("startDate", eElement);
+                List<String> endDate = getTagValues("endDate", eElement);
+                List<String> realmName = getTagValues("realmName", eElement);
+                List<String> area = getTagValues("area", eElement);
+                List<String> thumbnailUrl = getTagValues("thumbnail", eElement);
 
                 JSONObject jsonObj = new JSONObject();
                 jsonObj.put("title", title);
@@ -56,6 +59,7 @@ public class ApiController {
                 jsonObj.put("startDate", startDate);
                 jsonObj.put("endDate", endDate);
                 jsonObj.put("realmName", realmName);
+                jsonObj.put("area", area);
                 jsonObj.put("thumbnail", thumbnailUrl);
                 jsonArray.put(jsonObj);
             }
@@ -66,12 +70,18 @@ public class ApiController {
 
         return jsonArray.toString();
     }
-
-    // tag값의 정보를 가져오는 함수
-    public static String getTagValue(String tag, Element eElement) {
-        String result = "";
-        NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
-        result = nlList.item(0).getTextContent();
-        return result;
-    }
+   
+   public static List<String> getTagValues(String tag, Element eElement) {
+	    List<String> results = new ArrayList<>();
+	    NodeList nlList = eElement.getElementsByTagName(tag);
+	    for (int i = 0; i < nlList.getLength(); i++) {
+	        Node node = nlList.item(i);
+	        if (node.getNodeType() == Node.ELEMENT_NODE) {
+	            Element element = (Element) node;
+	            results.add(element.getTextContent());
+	        }
+	    }
+	    return results;
+	}
+    
 }

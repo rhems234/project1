@@ -9,5 +9,6 @@ public class BuyDTO {
 	private String adult;
 	private String child;
 	private String title;
+	private int num;
 
 }

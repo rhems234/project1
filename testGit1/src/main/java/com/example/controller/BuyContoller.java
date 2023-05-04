@@ -1,6 +1,9 @@
 package com.example.controller;
 
 
+import java.sql.SQLException;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,6 @@ import com.example.service.BuyService;
 
 @Controller
 public class BuyContoller {
-
 
 	@Autowired
 	private BuyService buyService;
@@ -52,14 +54,55 @@ public class BuyContoller {
 	//구매처리
 	@PostMapping("/processBuy")
 	public String buy(@ModelAttribute("buyDTO") BuyDTO buyDTO, Model model, HttpSession session) {
-		boolean result = buyService.buy(session, buyDTO);
-		if (result) {
-			model.addAttribute("msg", "구매성공");
-			return "redirect:/";
-		} else {
-			model.addAttribute("msg", "구매실패.");
-			return "buy/buy";
-		}
+
+    boolean result = buyService.buy(session, buyDTO);
+	    if (result) {
+	        model.addAttribute("msg", "구매성공");
+	        model.addAttribute("buyDTO", buyDTO);
+	       return "redirect:/ticket?num="+buyService.findSeq();
+	    }
+
+	  return "buy/buy";
 	}
+
+	//내 활동 페이지
+	@GetMapping("/mybuy")
+	public String mydata(Model model, HttpSession session) {
+	MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
+	if (loginUser == null) {
+		return "redirect:/login"; // 로그인되어있지 않으면 로그인 화면으로 이동
+	} else {
+		try {
+			String memberId = loginUser.getId();
+			List<BuyDTO> buyList = buyService.mydata(memberId);
+			model.addAttribute("buyDTO", buyList);
+			model.addAttribute("memberDTO", loginUser);
+			return "buy/mybuy";
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "error";
+		}
+	 }
+  }
+
+	@GetMapping("/ticket")
+	public String myticket(Model model, HttpSession session, @RequestParam("num") int num) {
+	MemberDTO loginUser = (MemberDTO) session.getAttribute("loginUser");
+	if (loginUser == null) {
+		return "redirect:/login"; // 로그인되어있지 않으면 로그인 화면으로 이동
+	} else {
+		try {
+			List<BuyDTO> buyList = buyService.myticket(num);
+			 model.addAttribute("buyDTO", buyList);
+			 model.addAttribute("memberDTO", loginUser);
+			return "buy/ticket";
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "error";
+		}
+	 }
+   }
 
 }
