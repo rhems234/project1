@@ -5,32 +5,61 @@
 <style type="text/css">
 .btn{ background: linear-gradient(to right, #F7A4A4, #FEA679);}
 </style>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://kit.fontawesome.com/930e9d87c4.js"></script>
+
 <script type="text/javascript">
 	function checkForm() {
 		if (!document.newMember.id.value) {
-			alert("아이디를 입력하세요.");
-			return false;
-		}
-
+		    $('#myModal .modal-title').text('아이디를 입력하세요.');
+		    $('#myModal').modal('show');
+		    return false;
+		  }
+		
 		if (!document.newMember.password.value) {
-			alert("비밀번호를 입력하세요.");
-			return false;
+			$('#myModal .modal-title').text('비밀번호를 입력하세요.');
+		    $('#myModal').modal('show');
+		    return false;
 		}
-
 		if (document.newMember.password.value != document.newMember.password_confirm.value) {
-			alert("비밀번호를 동일하게 입력하세요.");
-			return false;
+			$('#myModal .modal-title').text('비밀번호를 동일하게 입력하세요.');
+		    $('#myModal').modal('show');
+		    return false;
 		}
-	}
+		 $('#sucess').modal('show');
+		 return false;
+	    }
 </script>
+
 <title>회원 가입</title>
 </head>
 <body>
-	
+		
 	<%@include file="../login_nav.jsp" %>	
 	<%@include file="../main_nav.jsp" %>	
+	
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title" id="myModalLabel">회원가입 완료</h4>
+	      </div>
+	        <button type="button" class="btn" style="color: white;" data-dismiss="modal">확인</button>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="modal fade" id="sucess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title" id="myModalLabel">회원가입 완료</h4>
+	      </div>
+	        <a href="<c:url value='/login'/>" class="btn" style="color: white;">로그인하기</a>
+	    </div>
+	  </div>
+	</div>
 
 	<div class="container" style="width: 400px; margin-top: 10px">
 		<form name="newMember" class="form-horizontal"  action="${pageContext.request.contextPath}/processAddMember" method="post" onsubmit="return checkForm()">
@@ -76,7 +105,6 @@
 				<button type="reset" class="btn" style="color: white;" onclick="reset()">취소</button>
 				</div>
 			</div>
-			
 		</form>
 	</div>
 	

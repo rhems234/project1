@@ -29,7 +29,7 @@
 			</c:when>
 			<c:otherwise>
 				<a class="navbar-brand">[${sessionScope.loginUser.name}님]</a>
-				<a class="navbar-brand" href="../buy/mybuy.jsp?id=${loginUser}"> 내 활동 </a>
+				<a class="navbar-brand" href="<c:url value="/mybuy"/>">내 활동</a>
 				<a class="navbar-brand" href="<c:url value="/logout"/>">로그아웃 </a>
 				<a class="navbar-brand" href="<c:url value="/updateMember"/>">회원 수정</a>
 			</c:otherwise>

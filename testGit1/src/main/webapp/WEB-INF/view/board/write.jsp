@@ -21,50 +21,46 @@
 <title>글쓰기</title>
 </head>
 <body>
-   <%@ include file="../login_nav.jsp" %>
+	<%@ include file="../login_nav.jsp" %>
 
-    <%@ include file="../main_nav.jsp" %>
-   
-   <div class="container mt-5">
-   <h1 class="text-center">리뷰 작성</h1>
-   
-   
-    
-    
-   <form action="${pageContext.request.contextPath}/board/write" method="post">
-   
-   <c:forEach var="buyDTO" items="${buyDTO}">
-      <div class="form-group">
-         <label for="title">제목</label>
-         <input type="text" class="form-control" id="title" name="title" value="${buyDTO.title}">
-      </div>
-      
-      <div class="form-group">
-         <label for="nickname">작성자</label>
-         <input type="text" name="nickname" value="${sessionScope.loginUser.nickname}" id="nickname" readonly="readonly">
-      </div>   
-         
-    </c:forEach>
-      
-      <div class="form-group">
-         <label for="text">내용</label>
-         <textarea class="form-control" id="text" name="text" rows="5" placeholder="내용을 입력하세요." required></textarea>
-      </div>
-      <div class="form-group">
-         <label for="grade">평점</label>
-         <input type="text" class="form-control" id="grade" name="grade" min="1" max="5" step="1" required>
-      </div>
-      
-      <button type="submit" class="btn btn-primary">작성 완료</button>
-   </form>
-   
+ 	<%@ include file="../main_nav.jsp" %>
+	
+	<div class="container mt-5">
+	<h1 class="text-center">리뷰 작성</h1>
+	 
+	<form action="${pageContext.request.contextPath}/board/write" method="post">
+	
+	<c:forEach var="buyDTO" items="${buyDTO}">
+		<div class="form-group">
+			<label for="title">제목</label>
+			<input type="text" class="form-control" id="title" name="title" value="${buyDTO.title}">
+		</div>
+		
+		<div class="form-group">
+			<label for="nickname">작성자</label>
+			<input type="text" name="nickname" value="${sessionScope.loginUser.nickname}" id="nickname" readonly="readonly">
+		</div>	
+			
+	 </c:forEach>
+		
+		<div class="form-group">
+			<label for="text">내용</label>
+			<textarea class="form-control" id="text" name="text" rows="5" placeholder="내용을 입력하세요." required></textarea>
+		</div>
+		
+		<div class="form-group">
+			<label for="grade">평점</label>
+			<input type="text" class="form-control" id="grade" name="grade" min="1" max="5" step="1" required>
+		</div>
+		
+		<button type="submit" class="btn btn-primary">작성 완료</button>
+	</form>
+	
   </div>
 
-
-
-   <br>
-   <a href="${pageContext.request.contextPath}/board">목록으로</a>
-   
-   <%@ include file="../footer.jsp" %>
+	<br>
+	<a href="${pageContext.request.contextPath}/board">목록으로</a>
+	
+	<%@ include file="../footer.jsp" %>
 </body>
 </html>

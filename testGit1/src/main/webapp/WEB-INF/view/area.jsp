@@ -27,7 +27,7 @@
 
    <%@ include file="main_nav.jsp" %>
    
-<ul class="nav nav-tabs d-flex" id="myTab" role="tablist">
+<ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#seoulList" role="tab" aria-controls="seoulList" aria-selected="true">서울</a>
   </li>
@@ -42,21 +42,19 @@
   </li>
 </ul>
 
-<div class="tab-content" id="myTabContent">
+<div class="tab-content" id="myTabContent" style="margin-top: 20px; text-align: center;">
   <div class="tab-pane fade show active" id="seoulList" role="tabpanel" aria-labelledby="home-tab">
-  	
   </div>
   <div class="tab-pane fade" id="gyeonggiList" role="tabpanel" aria-labelledby="profile-tab">
-    
+    <!-- 경기 탭 내용 -->
   </div>
   <div class="tab-pane fade" id="GyeongbukList" role="tabpanel" aria-labelledby="contact-tab">
-    
+    <!-- 경북 탭 내용 -->
   </div>
   <div class="tab-pane fade" id="busanList" role="tabpanel" aria-labelledby="contact-tab">
-    
+    <!-- 부산 탭 내용 -->
   </div>
 </div>
-
 
 
  <script>
@@ -79,8 +77,8 @@
             var endDate = jsonArray[i].endDate;
             var area = jsonArray[i].area;
             var thumbnailImage = jsonArray[i].thumbnail ? jsonArray[i].thumbnail : "https://via.placeholder.com/150x150"; // 썸네일 이미지가 없을 경우 기본 이미지 사용
-			
-            var cardEl = $("<div>").addClass("col-lg-2 col-md-3 col-sm-5 mb-3");
+
+            var cardEl = $("<div>").addClass("col mb-4").attr("style",  "width:300px; display: inline-block; margin-right: 10px;");
             var card = $("<div>").addClass("card h-100");
             var img = $("<img>").addClass("card-img-top").attr("src", thumbnailImage).attr("alt", "Card image cap").attr("style", "height:300px;");
             var cardBody = $("<div>").addClass("card-body");
@@ -89,6 +87,8 @@
             var cardPlace = $("<p>").addClass("card-text").text(place);
             var cardText = $("<p>").addClass("card-text").text(startDate + " ~ " + endDate);
             var cardArea = $("<p>").addClass("card-text cardArea").text(area);
+            
+            console.log(cardArea.text());
             
          // 지역별 분기 처리
             if (cardArea.text() === "서울") {
@@ -127,17 +127,18 @@
             
             cardBody.append(btn1);
 
-         // 버튼 2
-            var btn2 = $("<button>").addClass("btn btn-secondary float-right ml-2").text("리스트");
+
+            // 버튼 2
+            var btn2 = $("<button>").addClass("btn btn-secondary float-right ml-2").text("리뷰모음");
             btn2.attr("data-card-info", JSON.stringify(jsonArray[i]));
             btn2.click(function() {
                 var cardInfo = JSON.parse($(this).attr("data-card-info"));
-                var queryString = "?realmName=" + cardInfo.realmName + "&title=" + cardInfo.title + "&thumbnail=" + encodeURIComponent(cardInfo.thumbnail);
+                var queryString = "?realmName=" + cardInfo.realmName + "&title=" + encodeURIComponent(cardInfo.title) + "&place=" + cardInfo.place + "&thumbnail=" + encodeURIComponent(cardInfo.thumbnail);
                 var contextPath = "<%=request.getContextPath()%>";
-                var url = contextPath + "/board";
-                window.location.href = url + queryString;
+                var url = contextPath + "/titleboard";
+                window.location.href = url + queryString;      
             });
-
+            
             cardBody.append(btn2);
 
 

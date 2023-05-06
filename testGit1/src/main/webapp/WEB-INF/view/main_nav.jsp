@@ -12,11 +12,11 @@
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<div class="container-md" style="display: flex; justify-content:center; align-items: center;">
-		<div class="navbar-header">
-			<a class="navbar-brand" style="margin-right: 55px; font-size: 28px" href="#">전국 전시회</a>
-			<a class="navbar-brand" style="margin-right: 55px; font-size: 28px" href="area">지역별 전시회</a>
-			<a class="navbar-brand" style="margin-right: 55px; font-size: 28px" href="#">게시판</a>
-		</div>
-	</div>
+   <div class="container-md" style="display: flex; justify-content:center; align-items: center;">
+      <div class="navbar-header">
+         <a class="navbar-brand" style="margin-right: 55px; font-size: 28px" href="#">전국 전시회</a>
+         <a class="navbar-brand" style="margin-right: 55px; font-size: 28px" href="<c:url value="/area"/>">지역별 전시회</a>
+         <a class="navbar-brand" style="margin-right: 55px; font-size: 28px" href="<c:url value="/board"/>">리뷰 모음</a>
+      </div>
+   </div>
 </nav>

@@ -9,9 +9,13 @@
 <%
 	String title = request.getParameter("title");
 %>
+<%
+	String thumbnail = request.getParameter("thumbnail"); 
+%>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <style type="text/css">
 @font-face {
 	font-family: 'GangwonEdu_OTFBoldA';
@@ -91,12 +95,12 @@
 					</div>
 				</div>
 
-				<form class="form-horizontal" action="${pageContext.request.contextPath}/processBuy" name="buypage" onsubmit="return checkForm()"
-					method="post">
+				<form class="form-horizontal" action="${pageContext.request.contextPath}/processBuy" name="buypage" onsubmit="return checkForm()" method="post">
 					<div class="row mt-4">
 						<div class="col">
 							<div class="card" style="width: 18rem;">
 								<div class="card-body">
+									<input type="hidden" name="thumbnail" value="<%=thumbnail%>">
 									<input type="hidden" name="title" value="<%=title%>">
 									<h3 class="card-title">티켓 수량 선택</h3>
 									<h5 class="card-text">성인</h5>

@@ -25,11 +25,12 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
-	
+
+	//지역별 전시회
 	@GetMapping("/area")
-	public String area() {
-		return "area";
-	}
+	   public String area() {
+	      return "area";
+	   }
 
 	//로그인 화면 이동
 	@GetMapping("/login")

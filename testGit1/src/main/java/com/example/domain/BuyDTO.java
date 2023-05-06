@@ -10,5 +10,6 @@ public class BuyDTO {
 	private String child;
 	private String title;
 	private int num;
+	private String thumbnail;
 
 }

@@ -26,12 +26,14 @@ public class ApiController {
    @ResponseBody
    @GetMapping(value = "/test2", produces = "application/html; charset=UTF-8")
     public String getExhibitionInfoWithImages() throws IOException, ParserConfigurationException, SAXException, JSONException {
-        String key = "0OhBU7ZCGIobDVKDeBJDpmDRqK3IRNF6jlf/JB2diFAf/fR2czYO9A4UTGcsOwppV6W2HVUeho/FPwXoL6DwqA==";
+        String key = "ILEuvHedm5Mts3ZpudoU8a9%2BDdaOwoecKJOjXjU%2B9ojDsxSn8dG%2BRugXbJrL4r4biQE3pvzrt4mCSa1caDW8Vw%3D%3D";
         JSONArray jsonArray = new JSONArray();
 
         try {
             String url = "http://www.culture.go.kr/openapi/rest/publicperformancedisplays/period"
-                    + "?ServiceKey=" + key +"&rows=100";
+                    + "?ServiceKey=" + key +"&rows=80";
+
+            System.out.println(url);
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -70,18 +72,17 @@ public class ApiController {
 
         return jsonArray.toString();
     }
-   
+
    public static List<String> getTagValues(String tag, Element eElement) {
-	    List<String> results = new ArrayList<>();
-	    NodeList nlList = eElement.getElementsByTagName(tag);
-	    for (int i = 0; i < nlList.getLength(); i++) {
-	        Node node = nlList.item(i);
-	        if (node.getNodeType() == Node.ELEMENT_NODE) {
-	            Element element = (Element) node;
-	            results.add(element.getTextContent());
-	        }
-	    }
-	    return results;
-	}
-    
+       List<String> results = new ArrayList<>();
+       NodeList nlList = eElement.getElementsByTagName(tag);
+       for (int i = 0; i < nlList.getLength(); i++) {
+           Node node = nlList.item(i);
+           if (node.getNodeType() == Node.ELEMENT_NODE) {
+               Element element = (Element) node;
+               results.add(element.getTextContent());
+           }
+       }
+       return results;
+   }
 }
